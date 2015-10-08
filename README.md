@@ -6,7 +6,7 @@ MooTools плагин для создания круглых фейдеров.
 Демо
 ---
 
-http://psnet.lookformp3.net/_demo/simple_tabs/example.htm
+http://psnet.github.io/roundedfader/demo/
 
 Лицензия
 ---
