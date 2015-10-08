@@ -1,0 +1,90 @@
+/**
+ * Rounded Fader lib demo
+ *
+ * @copyright Serge Pustovit (PSNet), 2008 - 2015
+ * @author    Serge Pustovit (PSNet) <light.feel@gmail.com>
+ *
+ * @link      http://psnet.lookformp3.net
+ */
+
+/* base */
+
+body {
+	background: #999;
+	margin: 0;
+	padding: 0 10px;
+	min-width: 900px;
+}
+
+a {
+	color: hsl(205, 100%, 50%);
+	text-decoration: none;
+}
+
+a:hover {
+	color: hsl(149, 100%, 50%);
+}
+
+/* helpers */
+
+.fl-l {
+	float: left !important;
+}
+
+.fl-r {
+	float: right !important;
+}
+
+/* demo */
+
+.inner {
+	width: 782px;
+	margin: -100% auto 10px;
+	background: #333;
+	border-radius: 10px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+	padding: 20px;
+	overflow: hidden;
+	transition: margin 0.5s;
+}
+
+.inner.show {
+	margin-top: 12%;
+}
+
+.display-value-wrapper {
+	overflow: hidden;
+	padding: 16px 15% 0;
+}
+
+.display-value {
+	background: #5589BA;
+	border: 7px solid hsl(0, 0%, 19%);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) inset;
+	color: #FFF;
+	font-size: 28px;
+	line-height: 30px;
+	padding: 10px;
+	text-align: center;
+	font-family: 'Orbitron', sans-serif;
+}
+
+.footer {
+	background: hsl(0, 0%, 33%) none repeat scroll 0 0;
+	border-radius: 2px;
+	color: hsl(0, 0%, 100%);
+	padding: 20px;
+	text-align: center;
+	font-family: 'Lobster', cursive;
+	font-size: 17px;
+}
+
+.bg-image {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: transparent url("images/bg.jpg") no-repeat center center / 100% auto;
+	z-index: -1;
+}
