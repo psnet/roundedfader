@@ -55,7 +55,7 @@ var RoundedFader = new Class({
 		this.Options.ID = '_' + (new Date().getTime()).toString() + (parseInt(Math.random() * 1000)).toString();
 		this.Options.FromValue = FromValue;
 		this.Options.ToValue = ToValue;
-		this.Options.CurrentFaderValue = CurrentFaderValue;
+		this.Options.CurrentFaderValue = this.Options.PreviousValue = CurrentFaderValue;
 		this.Options.CallBackFunction = CallBackFunction;
 		/**
 		 * document injection
