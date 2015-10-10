@@ -16,6 +16,7 @@ var RoundedFader = new Class({
 		ID: '',
 		MouseDown: false,
 		InitialValue: 0,
+		PreviousValue: null,
 		/**
 		 * circle
 		 */
@@ -127,16 +128,21 @@ var RoundedFader = new Class({
 			TThisObjFader.Options.CurrentFaderValue += CurrentMouseY;
 			TThisObjFader.Options.CurrentFaderValue = (TThisObjFader.Options.CurrentFaderValue > TThisObjFader.Options.ToValue ? TThisObjFader.Options.ToValue : TThisObjFader.Options.CurrentFaderValue);
 			TThisObjFader.Options.CurrentFaderValue = (TThisObjFader.Options.CurrentFaderValue < TThisObjFader.Options.FromValue ? TThisObjFader.Options.FromValue : TThisObjFader.Options.CurrentFaderValue);
+			/**
+			 * fire events if only value is really changed
+			 */
+			if (TThisObjFader.Options.CurrentFaderValue !== TThisObjFader.Options.PreviousValue) {
+				if (typeof TThisObjFader.Options.CallBackFunction == 'function') {
+					TThisObjFader.Options.CallBackFunction.call(this, TThisObjFader.Options.CurrentFaderValue);
+				}
 
-			if (typeof TThisObjFader.Options.CallBackFunction == 'function') {
-				TThisObjFader.Options.CallBackFunction.call(this, TThisObjFader.Options.CurrentFaderValue);
+				TThisObjFader._SetShadow();
+
+				TThisObjFader._SetRotation();
 			}
 
-			TThisObjFader._SetShadow();
-
-			TThisObjFader._SetRotation();
-
 			TThisObjFader.Options.InitialValue = e.event.clientY;
+			TThisObjFader.Options.PreviousValue = TThisObjFader.Options.CurrentFaderValue;
 			e.stop();
 		}
 	},
