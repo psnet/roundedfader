@@ -76,7 +76,22 @@ window.addEvent('domready', function () {
 		RoundedFaderDemo.processFilter();
 	});
 	/**
-	 * появляющаяся форма
+	 * изменение размера двух верхних регуляторов
+	 */
+	new RoundedFader($('js-size-fader'), 90, 280, 90, function(value) {
+		RoundedFaderDemo.showRawValue('size fader value: ' + value);
+		$$ ('#js-fader-wrapper-1 .rounded-fader, #js-fader-wrapper-2 .rounded-fader').setStyles({'width': value + 'px', 'height': value + 'px'});
+		$$ ('.js-inner-container').setStyles({
+			'width': 782 + 2 * (value - this.Options.FromValue) + 'px',
+			/**
+			 * Поднимать от 3% до 12%
+			 */
+			'margin-top': ((value - this.Options.FromValue)*(3 - 12)) / (this.Options.ToValue - this.Options.FromValue) + 12 + '%'
+		});
+	}, 'sizer');
+	/**
+	 * появляющаяся форма и регулятор размера
 	 */
 	$$('.js-inner-container').addClass('show');
+	$$('.js-size-fader').addClass('show');
 });

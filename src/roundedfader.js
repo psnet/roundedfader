@@ -129,7 +129,7 @@ var RoundedFader = new Class({
 			TThisObjFader.Options.CurrentFaderValue = (TThisObjFader.Options.CurrentFaderValue < TThisObjFader.Options.FromValue ? TThisObjFader.Options.FromValue : TThisObjFader.Options.CurrentFaderValue);
 
 			if (typeof TThisObjFader.Options.CallBackFunction == 'function') {
-				TThisObjFader.Options.CallBackFunction(TThisObjFader.Options.CurrentFaderValue);
+				TThisObjFader.Options.CallBackFunction.call(this, TThisObjFader.Options.CurrentFaderValue);
 			}
 
 			TThisObjFader._SetShadow();

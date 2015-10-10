@@ -45,7 +45,7 @@ a:hover {
 	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
 	padding: 20px;
 	overflow: hidden;
-	transition: margin 0.5s;
+	transition: margin 0.5s ease 0s;
 }
 
 .inner.show {
@@ -54,7 +54,7 @@ a:hover {
 
 .display-value-wrapper {
 	overflow: hidden;
-	padding: 16px 15% 0;
+	padding: 16px 115px 0;
 }
 
 .display-value {
@@ -87,4 +87,23 @@ a:hover {
 	bottom: 0;
 	background: transparent url("images/bg.jpg") no-repeat center center / 100% auto;
 	z-index: -1;
+}
+
+/* size changer tweaks */
+
+.size-fader {
+	position: fixed;
+	left: 50%;
+	bottom: -100%;
+	margin-left: -100px;
+	transition: bottom 2s ease 0s;
+}
+
+.size-fader.show {
+	bottom: 10px;
+}
+
+.rounded-fader-custom-sizer .rounded-fader {
+	height: 200px;
+	width: 200px;
 }
