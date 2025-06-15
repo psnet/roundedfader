@@ -18,16 +18,14 @@
 .rounded-fader .internal-volume {
 	border-radius: 50%;
 	box-shadow: 0 0 10px #207CCA, 0 0 10px #207CCA, 0 0 10px #207CCA;
-	background: #55AABB;
-	background: linear-gradient(to bottom, #88ccee 0%, #55aabb 100%);
+	background: #55AABB linear-gradient(to bottom, #88ccee 0%, #55aabb 100%);
 	height: 80%;
 	margin: 10%;
 	width: 80%;
 }
 
 .rounded-fader .internal-volume.active {
-	background: #49A;
-	background: linear-gradient(to bottom, #77bbdd 0%, #4499aa 100%);
+	background: #49A linear-gradient(to bottom, #77bbdd 0%, #4499aa 100%);
 }
 
 .rounded-fader .internal-volume .volume-container {

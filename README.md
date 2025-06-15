@@ -6,7 +6,7 @@ MooTools plugin for creating rounded faders.
 Demo
 ---
 
-http://psnet.github.io/roundedfader/demo/
+[http://psnet.github.io/roundedfader/demo/](http://psnet.github.io/roundedfader/demo/)
 
 License
 ---
