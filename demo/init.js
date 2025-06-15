@@ -1,15 +1,15 @@
 /**
  * Rounded Fader lib demo
  *
- * @copyright Serge Pustovit (PSNet), 2008 - 2015
- * @author    Serge Pustovit (PSNet) <light.feel@gmail.com>
+ * @copyright Serhii Pustovit (PSNet), 2008 - 2015
+ * @author    Serhii Pustovit (PSNet) <light.feel@gmail.com>
  *
- * @link      http://psnet.lookformp3.net
+ * @link      https://github.com/psnet
  */
 
-RoundedFaderDemo = {
+var RoundedFaderDemo = {
 	/**
-	 * Опции для фильтра изображения
+	 * Options for image filter
 	 */
 	aFilterOptions: {
 		grayscale: '',
@@ -17,80 +17,92 @@ RoundedFaderDemo = {
 	},
 
 	/**
-	 * Задать значение фильтра
+	 * Set filter value
 	 *
 	 * @param sType
 	 * @param sValue
 	 */
-	setFilterValue: function(sType, sValue) {
+	setFilterValue: function (sType, sValue) {
 		if (!(sType in this.aFilterOptions)) {
 			throw new Error('No filter "' + sType + '" allowed in aFilterOptions');
-			return;
 		}
+
 		this.aFilterOptions[sType] = sValue;
 	},
 
 	/**
-	 * Использовать фильтр
+	 * Use filter
 	 */
-	processFilter: function() {
+	processFilter: function () {
 		var sFilterLine = '';
+
 		for (var sKey in this.aFilterOptions) {
 			/**
-			 * если свойство не задано
+			 * if the property is not set
 			 */
 			if (!this.aFilterOptions.hasOwnProperty(sKey) || !this.aFilterOptions[sKey]) {
 				continue;
 			}
+
 			/**
-			 * для всех заданных свойств построить ксс строку фильтра
+			 * for all given properties build a CSS filter string
 			 */
 			sFilterLine += sKey + '(' + this.aFilterOptions[sKey] + ') ';
 		}
+
 		$$('.js-bg-image')
 			.setStyle('filter', sFilterLine)
 			.setStyle('-webkit-filter', sFilterLine);
 	},
 
 	/**
-	 * Отображение текущего значения фейдера на табло
+	 * Displaying the current fader value on the scoreboard
 	 *
 	 * @param sMsg
 	 */
-	showRawValue: function(sMsg) {
+	showRawValue: function (sMsg) {
 		$('js-display-value-wrapper').set('html', sMsg);
 	},
-
-	last_elem_wo_separator: true
 };
 
 window.addEvent('domready', function () {
-	new RoundedFader($('js-fader-wrapper-1'), 0, 100, 0, function(value) {
+	new RoundedFader($('js-fader-wrapper-1'), 0, 100, 0, function (value) {
 		RoundedFaderDemo.showRawValue('left fader value: ' + value);
 		RoundedFaderDemo.setFilterValue('grayscale', value + '%');
 		RoundedFaderDemo.processFilter();
 	});
-	new RoundedFader($('js-fader-wrapper-2'), 0, 50, 0, function(value) {
+
+	new RoundedFader($('js-fader-wrapper-2'), 0, 50, 0, function (value) {
 		RoundedFaderDemo.showRawValue('right fader value: ' + value);
 		RoundedFaderDemo.setFilterValue('blur', value + 'px');
 		RoundedFaderDemo.processFilter();
 	});
+
 	/**
-	 * изменение размера двух верхних регуляторов
+	 * change the size of the two upper controls
 	 */
-	new RoundedFader($('js-size-fader'), 90, 280, 90, function(value) {
-		RoundedFaderDemo.showRawValue('size fader value: ' + value);
-		$$ ('#js-fader-wrapper-1 .rounded-fader, #js-fader-wrapper-2 .rounded-fader').setStyles({'width': value + 'px', 'height': value + 'px'});
-		$$ ('.js-inner-container').setStyles({
-			'width': 782 + 2 * (value - this.Options.FromValue) + 'px',
-			/**
-			 * Поднимать от 3% до 12%
-			 */
-			'margin-top': ((value - this.Options.FromValue)*(3 - 12)) / (this.Options.ToValue - this.Options.FromValue) + 12 + '%'
-		});
-	}, 'sizer');
+	new RoundedFader(
+		$('js-size-fader'),
+		90,
+		280,
+		90,
+		function (value) {
+			RoundedFaderDemo.showRawValue('size fader value: ' + value);
+
+			$$('#js-fader-wrapper-1 .rounded-fader, #js-fader-wrapper-2 .rounded-fader').setStyles({ 'width': value + 'px', 'height': value + 'px' });
+			$$('.js-inner-container').setStyles({
+				'width': 782 + 2 * (value - this.Options.FromValue) + 'px',
+				/**
+				 * Raise from 3% to 12%
+				 */
+				'margin-top': ((value - this.Options.FromValue) * (3 - 12)) / (this.Options.ToValue - this.Options.FromValue) + 12 + '%'
+			});
+		},
+		'sizer'
+	);
+
 	/**
-	 * появляющаяся форма и регулятор размера
+	 * emerging shape and size regulator
 	 */
 	$$('.js-inner-container').addClass('show');
 	$$('.js-size-fader').addClass('show');

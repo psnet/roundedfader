@@ -1,16 +1,16 @@
 Rounded Fader lib
 ===========
 
-MooTools плагин для создания круглых фейдеров.
+MooTools plugin for creating rounded faders.
 
-Демо
+Demo
 ---
 
 http://psnet.github.io/roundedfader/demo/
 
-Лицензия
+License
 ---
 
-(P) PSNet 2015, http://psnet.lookformp3.net
+(P) PSNet 2015, https://github.com/psnet
 
 Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)

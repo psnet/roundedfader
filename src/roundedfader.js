@@ -1,16 +1,16 @@
 /**
  * Rounded Fader lib
  *
- * @copyright Serge Pustovit (PSNet), 2008 - 2015
- * @author    Serge Pustovit (PSNet) <light.feel@gmail.com>
+ * @copyright Serhii Pustovit (PSNet), 2008 - 2015
+ * @author    Serhii Pustovit (PSNet) <light.feel@gmail.com>
  *
- * @link      http://psnet.lookformp3.net
+ * @link      https://github.com/psnet
  */
 
 var RoundedFader = new Class({
-	
+
 	Options: {
-		FaderStructure: function(ID) {
+		FaderStructure: function (ID) {
 			return '<div class="rounded-fader"><div class="internal-volume" id="js-fader-center-ball' + ID + '"><div class="volume-container" id="js-fader-center-line-container' + ID + '"><div class="volume-line"></div></div></div></div>';
 		},
 		ID: '',
@@ -34,7 +34,7 @@ var RoundedFader = new Class({
 		CurrentFaderValue: 0, // same #1
 		FromValue: 0,
 		ToValue: 100,
-		CallBackFunction: function() {}
+		CallBackFunction: function () { }
 	},
 
 	/**
@@ -47,28 +47,35 @@ var RoundedFader = new Class({
 	 * @param CallBackFunction
 	 * @param CustomParentClass
 	 */
-	initialize: function(WhereToPut, FromValue, ToValue, CurrentFaderValue, CallBackFunction, CustomParentClass) {
-		if (! WhereToPut) return;
+	initialize: function (WhereToPut, FromValue, ToValue, CurrentFaderValue, CallBackFunction, CustomParentClass) {
+		if (!WhereToPut) {
+			return;
+		}
+
 		/**
 		 * setup
 		 */
-		this.Options.ID = '_' + (new Date().getTime()).toString() + (parseInt(Math.random() * 1000)).toString();
+		this.Options.ID = '_' + (new Date().getTime()).toString() + (Math.floor(Math.random() * 1000)).toString();
 		this.Options.FromValue = FromValue;
 		this.Options.ToValue = ToValue;
 		this.Options.CurrentFaderValue = this.Options.PreviousValue = CurrentFaderValue;
 		this.Options.CallBackFunction = CallBackFunction;
+
 		/**
 		 * document injection
 		 */
 		var newDiv = new Element('div');
+
 		/**
 		 * for custom design
 		 */
 		if (CustomParentClass) {
 			newDiv.set('class', 'rounded-fader-custom-' + CustomParentClass);
 		}
+
 		newDiv.set('html', this.Options.FaderStructure(this.Options.ID));
 		newDiv.inject(WhereToPut);
+
 		/**
 		 * init
 		 */
@@ -77,87 +84,90 @@ var RoundedFader = new Class({
 		this.AttachDefaultEvents();
 	},
 
-
-	OnMouseDownUp: function(e, TThisObjFader) {
+	OnMouseDownUp: function (e, thisObjFader) {
 		if (e) {
-			TThisObjFader.Options.InitialValue = e.event.clientY;
-			TThisObjFader.Options.MouseDown = e.type == 'mousedown';
+			thisObjFader.Options.InitialValue = e.event.clientY;
+			thisObjFader.Options.MouseDown = e.type == 'mousedown';
+
 			e.stop();
-			if (TThisObjFader.Options.MouseDown) {
-				$('js-fader-center-ball' + TThisObjFader.Options.ID).addClass('active');
+
+			if (thisObjFader.Options.MouseDown) {
+				$('js-fader-center-ball' + thisObjFader.Options.ID).addClass('active');
 			} else {
-				$('js-fader-center-ball' + TThisObjFader.Options.ID).removeClass('active');
+				$('js-fader-center-ball' + thisObjFader.Options.ID).removeClass('active');
 			}
 		}
 	},
 
-
-	_SetShadow: function() {
+	_SetShadow: function () {
 		this._CalculateShadowRange();
-		var StyleString = '0 0 ' + this.Options.CurrentShadowPX + 'px #207CCA, 0 0 ' + this.Options.CurrentShadowPX + 'px #207CCA, 0 0 ' + this.Options.CurrentShadowPX + 'px #207CCA';
-		$('js-fader-center-ball' + this.Options.ID).setStyle('box-shadow', StyleString);
+
+		var styleString = '0 0 ' + this.Options.CurrentShadowPX + 'px #207CCA, 0 0 ' + this.Options.CurrentShadowPX + 'px #207CCA, 0 0 ' + this.Options.CurrentShadowPX + 'px #207CCA';
+
+		$('js-fader-center-ball' + this.Options.ID).setStyle('box-shadow', styleString);
 	},
 
-
-	_SetRotation: function() {
+	_SetRotation: function () {
 		this._CalculateDegree();
-		var StyleString = 'rotate(' + this.Options.CurrentDegree + 'deg)';
-		$('js-fader-center-line-container' + this.Options.ID).setStyle('transform', StyleString);
+
+		var styleString = 'rotate(' + this.Options.CurrentDegree + 'deg)';
+
+		$('js-fader-center-line-container' + this.Options.ID).setStyle('transform', styleString);
 	},
 
-
-	_CalculateShadowRange: function() {
+	_CalculateShadowRange: function () {
 		// from MinShadowPX to MaxShadowPX
 		// ((CurrentIn - MinIn)(MaxOut - MinOut)) / (MaxIn - MinIn) + MinOut
-		this.Options.CurrentShadowPX = parseInt(((this.Options.CurrentFaderValue - this.Options.FromValue) * (this.Options.MaxShadowPX - this.Options.MinShadowPX)) / (this.Options.ToValue - this.Options.FromValue) + this.Options.MinShadowPX);
+		this.Options.CurrentShadowPX = Math.floor(((this.Options.CurrentFaderValue - this.Options.FromValue) * (this.Options.MaxShadowPX - this.Options.MinShadowPX)) / (this.Options.ToValue - this.Options.FromValue) + this.Options.MinShadowPX);
 	},
 
-
-	_CalculateDegree: function() {
+	_CalculateDegree: function () {
 		// from 0 to 270 degrees
 		// ((CurrentIn - MinIn)(MaxOut - MinOut)) / (MaxIn - MinIn) + MinOut
-		this.Options.CurrentDegree = parseInt(((this.Options.CurrentFaderValue - this.Options.FromValue) * 270) / (this.Options.ToValue - this.Options.FromValue));
+		this.Options.CurrentDegree = Math.floor(((this.Options.CurrentFaderValue - this.Options.FromValue) * 270) / (this.Options.ToValue - this.Options.FromValue));
 		this.Options.CurrentDegree += this.Options.DegreeOffset;
 	},
 
+	OnMouseMove: function (e, thisObjFader) {
+		if (e && thisObjFader.Options.MouseDown) {
+			var CurrentMouseY = thisObjFader.Options.InitialValue - e.event.clientY;
 
-	OnMouseMove: function(e, TThisObjFader) {
-		if ((e) && (TThisObjFader.Options.MouseDown)) {
-			var CurrentMouseY = TThisObjFader.Options.InitialValue - e.event.clientY;
+			thisObjFader.Options.CurrentFaderValue += CurrentMouseY;
+			thisObjFader.Options.CurrentFaderValue = (thisObjFader.Options.CurrentFaderValue > thisObjFader.Options.ToValue ? thisObjFader.Options.ToValue : thisObjFader.Options.CurrentFaderValue);
+			thisObjFader.Options.CurrentFaderValue = (thisObjFader.Options.CurrentFaderValue < thisObjFader.Options.FromValue ? thisObjFader.Options.FromValue : thisObjFader.Options.CurrentFaderValue);
 
-			TThisObjFader.Options.CurrentFaderValue += CurrentMouseY;
-			TThisObjFader.Options.CurrentFaderValue = (TThisObjFader.Options.CurrentFaderValue > TThisObjFader.Options.ToValue ? TThisObjFader.Options.ToValue : TThisObjFader.Options.CurrentFaderValue);
-			TThisObjFader.Options.CurrentFaderValue = (TThisObjFader.Options.CurrentFaderValue < TThisObjFader.Options.FromValue ? TThisObjFader.Options.FromValue : TThisObjFader.Options.CurrentFaderValue);
 			/**
 			 * fire events if only value is really changed
 			 */
-			if (TThisObjFader.Options.CurrentFaderValue !== TThisObjFader.Options.PreviousValue) {
-				if (typeof TThisObjFader.Options.CallBackFunction == 'function') {
-					TThisObjFader.Options.CallBackFunction.call(this, TThisObjFader.Options.CurrentFaderValue);
+			if (thisObjFader.Options.CurrentFaderValue !== thisObjFader.Options.PreviousValue) {
+				if (typeof thisObjFader.Options.CallBackFunction == 'function') {
+					thisObjFader.Options.CallBackFunction.call(this, thisObjFader.Options.CurrentFaderValue);
 				}
 
-				TThisObjFader._SetShadow();
+				thisObjFader._SetShadow();
 
-				TThisObjFader._SetRotation();
+				thisObjFader._SetRotation();
 			}
 
-			TThisObjFader.Options.InitialValue = e.event.clientY;
-			TThisObjFader.Options.PreviousValue = TThisObjFader.Options.CurrentFaderValue;
+			thisObjFader.Options.InitialValue = e.event.clientY;
+			thisObjFader.Options.PreviousValue = thisObjFader.Options.CurrentFaderValue;
 			e.stop();
 		}
 	},
 
+	AttachDefaultEvents: function () {
+		var thisObjFader = this;
 
-	AttachDefaultEvents: function() {
-		var TThisObjFader = this;
-		document.addEvent('mousemove', function(e) {
-			TThisObjFader.OnMouseMove(e, TThisObjFader);
+		document.addEvent('mousemove', function (e) {
+			thisObjFader.OnMouseMove(e, thisObjFader);
 		});
-		$('js-fader-center-ball' + TThisObjFader.Options.ID).addEvent('mousedown', function(e) {
-			TThisObjFader.OnMouseDownUp(e, TThisObjFader);
+
+		$('js-fader-center-ball' + thisObjFader.Options.ID).addEvent('mousedown', function (e) {
+			thisObjFader.OnMouseDownUp(e, thisObjFader);
 		});
-		document.addEvent('mouseup', function(e) {
-			TThisObjFader.OnMouseDownUp(e, TThisObjFader);
+
+		document.addEvent('mouseup', function (e) {
+			thisObjFader.OnMouseDownUp(e, thisObjFader);
 		});
 	}
 
